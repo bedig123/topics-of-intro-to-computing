@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title> | Introduction To Computing - BS Computer Science-1 </title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #070b14;
+  --card: #0f172a;
+  --card2: #1e293b;
+  --cyan: #00f0ff;
+  --purple: #a855f7;
+  --pink: #ff2e63;
+  --green: #00ff9f;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --border: #1e293b;
+  --grad: linear-gradient(135deg,#00f0ff,#a855f7,#ff2e63);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Rajdhani',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+  overflow-x:hidden;
+}
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background:
+    radial-gradient(circle at 15% 20%,rgba(0,240,255,.06) 0%,transparent 45%),
+    radial-gradient(circle at 85% 75%,rgba(168,85,247,.06) 0%,transparent 45%);
+  pointer-events:none; z-index:-1;
+}
+
+/* NAV */
+header {
+  position:sticky; top:0; z-index:999;
+  background:rgba(7,11,20,.92);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+}
+.nav {
+  max-width:1300px; margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:.85rem 1.5rem; gap:1rem;
+}
+.logo {
+  font-family:'Orbitron',sans-serif; font-weight:900; font-size:1.4rem;
+  background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.nav ul { display:flex; flex-wrap:wrap; gap:.3rem; list-style:none; }
+.nav a {
+  color:var(--muted); text-decoration:none; font-weight:600; font-size:.9rem;
+  padding:.4rem .85rem; border-radius:6px; transition:.25s; text-transform:uppercase; letter-spacing:.5px;
+}
+.nav a:hover, .nav a.active { color:var(--cyan); background:rgba(0,240,255,.1); }
+
+/* HERO */
+.hero {
+  min-height:90vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:3rem 1.5rem; position:relative;
+}
+.hero h1 {
+  font-family:'Orbitron',sans-serif; font-size:clamp(2.2rem,6vw,3.8rem); font-weight:900;
+  background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  margin-bottom:1rem;
+}
+.hero p { max-width:680px; color:var(--muted); font-size:1.25rem; margin-bottom:2rem; }
+.btn {
+  display:inline-block; padding:.85rem 1.8rem; border-radius:8px; font-family:'Orbitron',sans-serif;
+  font-weight:600; font-size:.9rem; text-transform:uppercase; letter-spacing:1px;
+  text-decoration:none; transition:.3s; cursor:pointer; border:none;
+}
+.btn-primary { background:var(--grad); color:#fff; box-shadow:0 4px 25px rgba(0,240,255,.35); }
+.btn-primary:hover { transform:translateY(-3px); box-shadow:0 8px 35px rgba(0,240,255,.5); }
+.btn-outline { border:2px solid var(--cyan); color:var(--cyan); background:transparent; margin-left:.8rem; }
+.btn-outline:hover { background:rgba(0,240,255,.1); transform:translateY(-3px); }
+
+/* SECTIONS */
+.container { max-width:1100px; margin:0 auto; padding:3.5rem 1.5rem; }
+section { margin-bottom:4.5rem; scroll-margin-top:80px; }
+h2 {
+  font-family:'Orbitron',sans-serif; font-size:1.9rem; color:var(--cyan);
+  margin-bottom:1.4rem; position:relative; display:inline-block;
+}
+h2::after {
+  content:''; position:absolute; left:0; bottom:-7px; width:55px; height:3px;
+  background:var(--grad); border-radius:2px;
+}
+h3 { font-family:'Orbitron',sans-serif; font-size:1.25rem; color:var(--purple); margin:1.4rem 0 .7rem; }
+p { color:var(--muted); margin-bottom:1rem; font-size:1.1rem; }
+
+/* TEAM */
+.team-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.5rem; margin-top:2rem;
+}
+.team-card {
+  background:var(--card); border:1px solid var(--border); border-radius:16px; padding:2rem; text-align:center;
+  transition:.35s; position:relative; overflow:hidden;
+}
+.team-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:var(--grad); }
+.team-card:hover { transform:translateY(-8px); border-color:var(--cyan); box-shadow:0 0 30px rgba(0,240,255,.2); }
+.avatar {
+  width:90px; height:90px; border-radius:50%; background:var(--grad); margin:0 auto 1.2rem;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Orbitron',sans-serif; font-size:2.2rem; font-weight:900; color:#fff;
+  box-shadow:0 0 25px rgba(0,240,255,.4);
+}
+.team-card h3 { color:var(--cyan); margin:.3rem 0; }
+.role { color:var(--pink); font-weight:600; text-transform:uppercase; font-size:.9rem; letter-spacing:1px; }
+.course { color:var(--muted); font-size:1rem; margin-top:.3rem; }
+
+/* CARDS */
+.cards {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.3rem; margin:1.8rem 0;
+}
+.card {
+  background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1.4rem;
+  transition:.3s;
+}
+.card:hover { border-color:var(--cyan); transform:translateY(-5px); box-shadow:0 0 25px rgba(0,240,255,.15); }
+.card .icon { font-size:2.2rem; margin-bottom:.7rem; display:block; }
+.card h3 { margin-top:0; color:var(--cyan); font-size:1.15rem; }
+
+/* TABLES */
+.table-wrap { overflow-x:auto; margin:1.8rem 0; border-radius:12px; border:1px solid var(--border); }
+table { width:100%; border-collapse:collapse; background:var(--card); }
+th, td { padding:.95rem 1.1rem; text-align:left; border-bottom:1px solid var(--border); }
+th {
+  background:rgba(0,240,255,.08); color:var(--cyan);
+  font-family:'Orbitron',sans-serif; font-size:.82rem; text-transform:uppercase; letter-spacing:1px;
+}
+td { color:var(--muted); }
+tr:hover td { background:rgba(0,240,255,.04); }
+
+/* FEATURE BOX */
+.feature {
+  background:linear-gradient(135deg,rgba(0,240,255,.07),rgba(168,85,247,.07));
+  border:1px solid var(--border); border-left:4px solid var(--cyan);
+  border-radius:0 12px 12px 0; padding:1.3rem 1.5rem; margin:1.5rem 0;
+}
+.feature h4 { color:var(--cyan); font-family:'Orbitron',sans-serif; margin-bottom:.4rem; }
+
+/* TIMELINE */
+.timeline { position:relative; padding-left:1.8rem; margin:2rem 0; }
+.timeline::before {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--grad); border-radius:2px;
+}
+.t-item { position:relative; margin-bottom:1.8rem; padding-left:1.3rem; }
+.t-item::before {
+  content:''; position:absolute; left:-2.15rem; top:.45rem; width:13px; height:13px;
+  background:var(--cyan); border-radius:50%; box-shadow:0 0 10px var(--cyan);
+}
+.t-year { font-family:'Orbitron',sans-serif; color:var(--pink); font-weight:700; font-size:1.05rem; }
+
+/* LISTS */
+ul.clean { margin:1rem 0 1.3rem 1.4rem; color:var(--muted); }
+ul.clean li { margin-bottom:.5rem; }
+ul.clean li::marker { color:var(--cyan); }
+
+/* FOOTER */
+footer {
+  background:var(--card); border-top:1px solid var(--border);
+  text-align:center; padding:2.5rem 1.5rem; margin-top:3rem;
+}
+footer .logo { display:inline-block; margin-bottom:.6rem; }
+footer p { color:var(--muted); font-size:.95rem; }
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .nav { flex-direction:column; align-items:flex-start; }
+  .nav ul { width:100%; }
+  .hero h1 { font-size:2.1rem; }
+  .btn-outline { margin-left:0; margin-top:.6rem; display:inline-block; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<header>
+  <div class="nav">
+    <div class="logo">⚡ CompEdu</div>
+    <ul>
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#history">History</a></li>
+      <li><a href="#environments">Environments</a></li>
+      <li><a href="#infosys">Info Systems</a></li>
+      <li><a href="#hardware">Hardware</a></li>
+      <li><a href="#memory">Memory</a></li>
+      <li><a href="#cpu">CPU</a></li>
+      <li><a href="#languages">Languages</a></li>
+      <li><a href="#database">Database</a></li>
+      <li><a href="#networking">Networking</a></li>
+      <li><a href="#internet">Internet</a></li>
+      <li><a href="#society">Society</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- ========== HERO + MEMBERS ========== -->
+<section class="hero" id="home">
+  <h1>Computing Essentials</h1>
+  <p>Complete educational resource covering computing fundamentals, hardware, memory, networking, internet & the digital society. Created by BS Computer Science students.</p>
+  <div>
+    <a href="#team" class="btn btn-primary">Meet the Team</a>
+    <a href="#history" class="btn btn-outline">Start Learning</a>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- MEMBERS -->
+  <section id="team">
+    <h2>Project Members</h2>
+    <p>BS Computer Science</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="avatar">S</div>
+        <h3>Socorro</h3>
+        <p class="role">Team Member</p>
+        <p class="course">BS Computer Science</p>
+      </div>
+      <div class="team-card">
+        <div class="avatar">B</div>
+        <h3>Bedig</h3>
+        <p class="role">Team Member</p>
+        <p class="course">BS Computer Science</p>
+      </div>
+      <div class="team-card">
+        <div class="avatar">M</div>
+        <h3>Mabanag</h3>
+        <p class="role">Team Member</p>
+        <p class="course">BS Computer Science</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRODUCTION TO COMPUTING -->
+  <section id="intro">
+    <h2>Introduction to Computing</h2>
+    <p>Computing is the process of using computer technology to complete a given goal-oriented task. It includes designing and building hardware and software systems, processing and managing information, scientific research, artificial intelligence, and creating communications & entertainment media.</p>
+    <div class="feature">
+      <h4>Key Insight</h4>
+      <p>Computing is far more than programming — it is the entire spectrum of activities that make computers useful to people and organizations.</p>
+    </div>
+    <div class="cards">
+      <div class="card"><span class="icon">🖥️</span><h3>Hardware</h3><p>Physical components: CPU, memory, storage, input/output devices.</p></div>
+      <div class="card"><span class="icon">💾</span><h3>Software</h3><p>Programs and instructions that control the hardware.</p></div>
+      <div class="card"><span class="icon">📡</span><h3>Networking</h3><p>Connecting devices to share data and resources.</p></div>
+      <div class="card"><span class="icon">🧠</span><h3>Data & Knowledge</h3><p>Turning raw data into useful information and knowledge.</p></div>
+    </div>
+  </section>
+
+  <!-- CHARACTERISTICS -->
+  <section id="characteristics">
+    <h2>Characteristics of a Computer</h2>
+    <div class="cards">
+      <div class="card"><h3>Speed</h3><p>Performs millions to billions of operations every second.</p></div>
+      <div class="card"><h3>Accuracy</h3><p>Extremely high accuracy when programmed correctly.</p></div>
+      <div class="card"><h3>Diligence</h3><p>Works continuously without fatigue or loss of concentration.</p></div>
+      <div class="card"><h3>Storage Capacity</h3><p>Can store and retrieve vast amounts of data quickly.</p></div>
+      <div class="card"><h3>Versatility</h3><p>Can perform almost any task depending on the software.</p></div>
+      <div class="card"><h3>Automation</h3><p>Once programmed, executes tasks with minimal human help.</p></div>
+    </div>
+  </section>
+
+  <!-- HISTORY -->
+  <section id="history">
+    <h2>History of Computing</h2>
+    <div class="timeline">
+      <div class="t-item"><div class="t-year">~2400 BCE</div><h3>Abacus</h3><p>Earliest calculating tool using beads on rods.</p></div>
+      <div class="t-item"><div class="t-year">1837</div><h3>Analytical Engine – Charles Babbage</h3><p>First design of a general-purpose mechanical computer. Ada Lovelace writes the first algorithm.</p></div>
+      <div class="t-item"><div class="t-year">1936</div><h3>Turing Machine – Alan Turing</h3><p>Theoretical foundation of modern computing.</p></div>
+      <div class="t-item"><div class="t-year">1941</div><h3>Z3 – Konrad Zuse</h3><p>World’s first working programmable digital computer.</p></div>
+      <div class="t-item"><div class="t-year">1945–46</div><h3>ENIAC & Von Neumann Architecture</h3><p>First general-purpose electronic computer. Stored-program concept is born.</p></div>
+      <div class="t-item"><div class="t-year">1970s–80s</div><h3>The PC Revolution</h3><p>Apple II, IBM PC and Windows bring computers into homes and small businesses.</p></div>
+      <div class="t-item"><div class="t-year">1990s</div><h3>World Wide Web & E-Commerce</h3><p>Tim Berners-Lee invents the WWW. Online shopping and global communication explode.</p></div>
+      <div class="t-item"><div class="t-year">2000s–Now</div><h3>Mobile, Cloud & AI</h3><p>Smartphones, cloud computing and artificial intelligence become everyday technology.</p></div>
+    </div>
+
+    <h3>Generations of Computers</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Generation</th><th>Period</th><th>Technology</th><th>Key Features</th></tr></thead>
+        <tbody>
+          <tr><td>1st</td><td>1940s–50s</td><td>Vacuum Tubes</td><td>Huge, power-hungry, machine language</td></tr>
+          <tr><td>2nd</td><td>1950s–60s</td><td>Transistors</td><td>Smaller, faster, assembly & early high-level languages</td></tr>
+          <tr><td>3rd</td><td>1960s–70s</td><td>Integrated Circuits</td><td>Even smaller, operating systems appear</td></tr>
+          <tr><td>4th</td><td>1970s–Present</td><td>Microprocessors</td><td>Personal computers, GUIs, networks, Internet</td></tr>
+          <tr><td>5th</td><td>Present+</td><td>AI & Parallel</td><td>Artificial intelligence, quantum computing</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TYPES OF COMPUTING ENVIRONMENTS -->
+  <section id="environments">
+    <h2>Types of Computing Environments</h2>
+    <p>A computing environment is the combination of hardware, software, network and services needed to run applications.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Environment</th><th>Description</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Personal Computing</strong></td><td>Stand-alone machine; programs run locally</td><td>Laptops, desktops, smartphones</td></tr>
+          <tr><td><strong>Time-Sharing</strong></td><td>Multiple users share one system; CPU switches rapidly</td><td>Unix, multi-user Linux, early mainframes</td></tr>
+          <tr><td><strong>Client-Server</strong></td><td>Clients request services; server provides them</td><td>Web browsers ↔ web servers</td></tr>
+          <tr><td><strong>Distributed</strong></td><td>Many nodes work together as one system</td><td>Clusters, peer-to-peer networks</td></tr>
+          <tr><td><strong>Cloud Computing</strong></td><td>Resources delivered on-demand over the Internet</td><td>AWS, Azure, Google Cloud, SaaS</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- INFORMATION SYSTEMS -->
+  <section id="infosys">
+    <h2>Information Systems</h2>
+    <p>An Information System is a set of components that collect, process, store and distribute information to support decision-making and control in an organization.</p>
+    <h3>Components of an Information System</h3>
+    <div class="cards">
+      <div class="card"><span class="icon">🔧</span><h3>Hardware</h3><p>Computers, servers, storage, networking devices.</p></div>
+      <div class="card"><span class="icon">📀</span><h3>Software</h3><p>Operating systems and application programs.</p></div>
+      <div class="card"><span class="icon">🗄️</span><h3>Data / Databases</h3><p>Organized facts that the system processes.</p></div>
+      <div class="card"><span class="icon">🌐</span><h3>Networks</h3><p>Wired or wireless connections between devices.</p></div>
+      <div class="card"><span class="icon">👥</span><h3>People</h3><p>Users, developers, managers and support staff.</p></div>
+      <div class="card"><span class="icon">📋</span><h3>Procedures</h3><p>Rules and methods that govern system use.</p></div>
+    </div>
+    <div class="feature">
+      <h4>Role of Information Systems</h4>
+      <p>They improve efficiency, support decisions at operational, tactical and strategic levels, create competitive advantage, enable communication and help organizations adapt to change.</p>
+    </div>
+  </section>
+
+  <!-- HARDWARE + CLASSIFICATION + CPU + PORTS -->
+  <section id="hardware">
+    <h2>Computer Hardware & Classification</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>Description</th><th>Typical Use</th></tr></thead>
+        <tbody>
+          <tr><td>Supercomputers</td><td>Extremely powerful parallel systems</td><td>Weather, AI training, scientific simulation</td></tr>
+          <tr><td>Mainframes</td><td>Highly reliable large systems</td><td>Banks, airlines, large enterprises</td></tr>
+          <tr><td>Servers</td><td>Provide services to many clients</td><td>Web hosting, databases, file sharing</td></tr>
+          <tr><td>Workstations</td><td>High-performance single-user machines</td><td>CAD, video editing, engineering</td></tr>
+          <tr><td>Personal Computers</td><td>Desktops & laptops</td><td>Office, education, entertainment</td></tr>
+          <tr><td>Mobile Devices</td><td>Phones, tablets, wearables</td><td>Communication & portable apps</td></tr>
+          <tr><td>Embedded Systems</td><td>Computers inside other devices</td><td>Cars, appliances, IoT, medical devices</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="cpu">
+    <h2>CPU / Processor / Microprocessor</h2>
+    <p>The Central Processing Unit is the “brain” of the computer. A microprocessor is a complete CPU on a single chip.</p>
+    <div class="cards">
+      <div class="card"><span class="icon">⚙️</span><h3>Control Unit</h3><p>Fetches and decodes instructions, directs the whole processor.</p></div>
+      <div class="card"><span class="icon">🔢</span><h3>ALU</h3><p>Performs arithmetic and logical operations.</p></div>
+      <div class="card"><span class="icon">📦</span><h3>Registers</h3><p>Tiny ultra-fast storage inside the CPU.</p></div>
+      <div class="card"><span class="icon">⏱️</span><h3>Clock</h3><p>Provides the timing signal (measured in GHz).</p></div>
+    </div>
+    <div class="feature">
+      <h4>Important Metrics</h4>
+      <p>Clock speed • Number of cores • Threads • Cache size (L1/L2/L3) • Architecture (x86-64, ARM, RISC-V)</p>
+    </div>
+
+    <h3>Computer Ports</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Port</th><th>Purpose</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>USB-A / USB-C</td><td>Keyboards, mice, drives, phones</td><td>Hot-swappable, very common</td></tr>
+          <tr><td>HDMI / DisplayPort</td><td>Video + audio to monitors</td><td>High resolution & refresh rates</td></tr>
+          <tr><td>Ethernet (RJ-45)</td><td>Wired network</td><td>Gigabit and multi-gigabit</td></tr>
+          <tr><td>Audio Jack</td><td>Headphones & microphones</td><td>3.5 mm analog</td></tr>
+          <tr><td>Thunderbolt</td><td>Ultra-fast data + video + power</td><td>Usually via USB-C</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- DATA, INFORMATION, KNOWLEDGE -->
+  <section id="data">
+    <h2>Data, Information & Knowledge</h2>
+    <div class="cards">
+      <div class="card"><span class="icon">📊</span><h3>Data</h3><p>Raw, unorganized facts (numbers, text, symbols).</p></div>
+      <div class="card"><span class="icon">ℹ️</span><h3>Information</h3><p>Processed and organized data that has meaning.</p></div>
+      <div class="card"><span class="icon">🧠</span><h3>Knowledge</h3><p>Information + experience + context that enables decisions.</p></div>
+    </div>
+    <div class="feature"><h4>Hierarchy</h4><p>Data → Information → Knowledge → Wisdom</p></div>
+  </section>
+
+  <!-- MEMORY -->
+  <section id="memory">
+    <h2>Computer Memory</h2>
+    <h3>Primary Memory</h3>
+    <div class="cards">
+      <div class="card"><span class="icon">⚡</span><h3>RAM</h3><p>Volatile read/write memory. Holds running programs and data. (DDR4, DDR5)</p></div>
+      <div class="card"><span class="icon">📖</span><h3>ROM</h3><p>Non-volatile. Stores firmware (BIOS/UEFI). Types: PROM, EPROM, Flash.</p></div>
+      <div class="card"><span class="icon">💾</span><h3>Cache</h3><p>Very fast memory inside/near the CPU (L1, L2, L3).</p></div>
+    </div>
+
+    <h3>Types of Secondary Memory</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>Technology</th><th>Advantages</th><th>Disadvantages</th></tr></thead>
+        <tbody>
+          <tr><td>Hard Disk (HDD)</td><td>Magnetic platters</td><td>High capacity, cheap</td><td>Slower, mechanical</td></tr>
+          <tr><td>Solid State Drive (SSD)</td><td>Flash memory</td><td>Very fast, silent, durable</td><td>Higher cost per GB</td></tr>
+          <tr><td>Optical Discs</td><td>CD / DVD / Blu-ray</td><td>Cheap, portable</td><td>Low capacity, slow</td></tr>
+          <tr><td>USB Flash Drive</td><td>Flash</td><td>Portable & convenient</td><td>Limited size</td></tr>
+          <tr><td>Memory Cards</td><td>SD / microSD</td><td>Tiny size</td><td>Smaller capacities</td></tr>
+          <tr><td>Cloud Storage</td><td>Remote servers</td><td>Accessible anywhere</td><td>Needs internet</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- COMPUTER LANGUAGES -->
+  <section id="languages">
+    <h2>Computer Languages and Their Types</h2>
+    <div class="cards">
+      <div class="card"><span class="icon">1️⃣</span><h3>Machine Language</h3><p>Pure binary (0s and 1s). Fastest but almost impossible for humans to write.</p></div>
+      <div class="card"><span class="icon">2️⃣</span><h3>Assembly Language</h3><p>Uses mnemonics (MOV, ADD). Needs an assembler. Still hardware-specific.</p></div>
+      <div class="card"><span class="icon">3️⃣</span><h3>High-Level Languages</h3><p>Python, Java, C++, JavaScript, C#. Easy to read and portable.</p></div>
+      <div class="card"><span class="icon">4️⃣</span><h3>4th Generation (4GL)</h3><p>Closer to natural language. Example: SQL for databases.</p></div>
+    </div>
+    <div class="feature">
+      <h4>Translators</h4>
+      <p><strong>Compiler</strong> – translates whole program at once • <strong>Interpreter</strong> – line by line • <strong>Assembler</strong> – assembly → machine code</p>
+    </div>
+  </section>
+
+  <!-- SHORTCUT KEYS -->
+  <section id="shortcuts">
+    <h2>Useful Shortcut Keys</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Shortcut</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Ctrl + C</td><td>Copy</td></tr>
+          <tr><td>Ctrl + X</td><td>Cut</td></tr>
+          <tr><td>Ctrl + V</td><td>Paste</td></tr>
+          <tr><td>Ctrl + Z</td><td>Undo</td></tr>
+          <tr><td>Ctrl + Y</td><td>Redo</td></tr>
+          <tr><td>Ctrl + A</td><td>Select All</td></tr>
+          <tr><td>Ctrl + S</td><td>Save</td></tr>
+          <tr><td>Ctrl + P</td><td>Print</td></tr>
+          <tr><td>Ctrl + F</td><td>Find</td></tr>
+          <tr><td>Alt + Tab</td><td>Switch apps</td></tr>
+          <tr><td>Alt + F4</td><td>Close window</td></tr>
+          <tr><td>Win + D</td><td>Show desktop</td></tr>
+          <tr><td>Win + L</td><td>Lock computer</td></tr>
+          <tr><td>Ctrl + Shift + Esc</td><td>Task Manager</td></tr>
+          <tr><td>F2</td><td>Rename</td></tr>
+          <tr><td>F5</td><td>Refresh</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- DATABASE -->
+  <section id="database">
+    <h2>Introduction to Databases</h2>
+    <p>A database is an organized collection of data. A Database Management System (DBMS) lets users create, store, retrieve and manage that data efficiently.</p>
+    <div class="cards">
+      <div class="card"><h3>Table</h3><p>Rows (records) and columns (fields).</p></div>
+      <div class="card"><h3>Primary Key</h3><p>Unique identifier for each record.</p></div>
+      <div class="card"><h3>Foreign Key</h3><p>Links one table to another.</p></div>
+      <div class="card"><h3>SQL</h3><p>Standard language for querying relational databases.</p></div>
+    </div>
+    <div class="feature">
+      <h4>Common Types</h4>
+      <p>Relational (MySQL, PostgreSQL) • NoSQL (MongoDB, Redis) • Cloud databases • In-memory databases</p>
+    </div>
+  </section>
+
+  <!-- NETWORKING -->
+  <section id="networking">
+    <h2>Data Communication & Networking</h2>
+    <p>Data communication is the exchange of data between devices through a transmission medium following a set of rules (protocol).</p>
+
+    <h3>Modes of Communication</h3>
+    <div class="cards">
+      <div class="card"><span class="icon">➡️</span><h3>Simplex</h3><p><strong>One-way only.</strong> Sender → Receiver. Examples: TV broadcast, radio, keyboard to computer.</p></div>
+      <div class="card"><span class="icon">↔️</span><h3>Half-Duplex</h3><p><strong>Two-way but one at a time.</strong> Walkie-talkies, older Ethernet hubs.</p></div>
+      <div class="card"><span class="icon">🔄</span><h3>Full-Duplex</h3><p><strong>Two-way at the same time.</strong> Modern telephone, switched Ethernet, video calls.</p></div>
+    </div>
+
+    <h3>Network Topology</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Topology</th><th>Description</th><th>Advantages</th><th>Disadvantages</th></tr></thead>
+        <tbody>
+          <tr><td>Bus</td><td>All devices share one backbone cable</td><td>Simple & cheap</td><td>Single point of failure</td></tr>
+          <tr><td>Star</td><td>All devices connect to a central switch</td><td>Easy to manage, cable failure isolated</td><td>Central device is critical</td></tr>
+          <tr><td>Ring</td><td>Devices form a closed loop</td><td>Orderly access</td><td>Break can disable network</td></tr>
+          <tr><td>Mesh</td><td>Many or all devices interconnect</td><td>Very fault-tolerant</td><td>Expensive & complex</td></tr>
+          <tr><td>Tree</td><td>Hierarchical stars</td><td>Scalable</td><td>Root failure partitions network</td></tr>
+          <tr><td>Hybrid</td><td>Combination of topologies</td><td>Flexible</td><td>Can be complex</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- INTERNET & WWW -->
+  <section id="internet">
+    <h2>Internet & World Wide Web</h2>
+
+    <h3>Connecting to the Internet</h3>
+    <p>You need an Internet Service Provider (ISP), a modem/router, and a device with a network interface. Common methods: Fiber, Cable, DSL, 4G/5G Mobile, Satellite, Wi-Fi.</p>
+
+    <h3>How Data Travels the Internet</h3>
+    <p>Data is broken into <strong>packets</strong>. Each packet contains the payload, source & destination IP addresses, sequence numbers and error-checking info. Packets travel through multiple routers using the TCP/IP protocol suite and are reassembled at the destination.</p>
+
+    <h3>Birth of the World Wide Web</h3>
+    <div class="timeline">
+      <div class="t-item"><div class="t-year">1989–90</div><h3>Tim Berners-Lee at CERN</h3><p>Invented HTML, HTTP, URL and the first web browser & server.</p></div>
+      <div class="t-item"><div class="t-year">1991</div><h3>Public Release</h3><p>The Web is made freely available to the world.</p></div>
+      <div class="t-item"><div class="t-year">1993</div><h3>Mosaic Browser</h3><p>Graphical browser makes the Web popular with ordinary users.</p></div>
+      <div class="t-item"><div class="t-year">1990s–2000s</div><h3>E-Commerce Explosion</h3><p>Amazon, eBay, Google and online banking transform the economy.</p></div>
+    </div>
+
+    <h3>Internet Facilities</h3>
+    <div class="cards">
+      <div class="card"><h3>World Wide Web</h3><p>Hyperlinked documents and multimedia.</p></div>
+      <div class="card"><h3>Email</h3><p>Global electronic messaging.</p></div>
+      <div class="card"><h3>File Transfer</h3><p>FTP and modern cloud storage.</p></div>
+      <div class="card"><h3>Streaming</h3><p>Video, music and live broadcasts.</p></div>
+      <div class="card"><h3>E-Commerce</h3><p>Buying and selling online (B2C, B2B, C2C).</p></div>
+      <div class="card"><h3>Cloud Services</h3><p>On-demand computing and storage.</p></div>
+    </div>
+  </section>
+
+  <!-- COMPUTER AND SOCIETY -->
+  <section id="society">
+    <h2>Computer and Society</h2>
+    <div class="cards">
+      <div class="card"><span class="icon">💼</span><h3>Workplace</h3><p>New jobs, remote work, higher productivity, automation of routine tasks.</p></div>
+      <div class="card"><span class="icon">📚</span><h3>Education</h3><p>Online learning, digital libraries, personalized education.</p></div>
+      <div class="card"><span class="icon">🏥</span><h3>Healthcare</h3><p>Electronic records, telemedicine, AI diagnostics, medical imaging.</p></div>
+      <div class="card"><span class="icon">🔒</span><h3>Privacy Risks</h3><p>Data breaches, tracking, identity theft, surveillance concerns.</p></div>
+      <div class="card"><span class="icon">⚖️</span><h3>Digital Divide</h3><p>Unequal access to technology creates new inequalities.</p></div>
+      <div class="card"><span class="icon">🤖</span><h3>Job Changes</h3><p>Some jobs disappear while new ones appear — continuous reskilling is needed.</p></div>
+    </div>
+    <div class="feature">
+      <h4>Ethical Responsibility</h4>
+      <p>Future computer professionals must design systems that are secure, fair, transparent and beneficial to society as a whole.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="logo">⚡ CompEdu</div>
+  <p>Created by <strong>Socorro • Bedig • Mabanag</strong></p>
+  <p>BS Computer Science</p>
+</footer>
+
+</body>
+</html>
+
